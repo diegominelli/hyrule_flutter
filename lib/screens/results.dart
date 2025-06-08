@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:hyrule_flutter/controllers/api_controller.dart';
 import 'package:hyrule_flutter/domain/models/entry.dart';
@@ -45,9 +46,17 @@ class _ResultsState extends State<Results> {
             ),
           ],
         ),
-        body: cardView
-            ? _CardList(entries: widget.entries)
-            : _ListView(entries: widget.entries),
+        body: PageTransitionSwitcher(
+          transitionBuilder: (child, primaryAnimation, secondaryAnimation) =>
+              FadeThroughTransition(
+                animation: primaryAnimation,
+                secondaryAnimation: secondaryAnimation,
+                child: child,
+              ),
+          child: cardView
+              ? _CardList(entries: widget.entries)
+              : _ListView(entries: widget.entries),
+        ),
       ),
     );
   }
